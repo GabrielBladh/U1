@@ -9,6 +9,7 @@ public class DA339A_U1 {
   static int score = 0;
   static String name = "";
   static Scanner input = new Scanner(System.in); //can be removed if another solution is used that does not require this scanner-object
+  static Scanner scan = new Scanner(System.in);
   static int passingGradeThreshold = 20; //change as you need when testing      
                                              
   
@@ -160,10 +161,32 @@ public class DA339A_U1 {
    */
   public static void addPerson(String name, int score) {
     System.out.println("You chose to add a person"); //you don't need to keep this line
-    System.out.println("Name of the new person you want to add");
-    name = input.nextLine();
-    System.out.println("Score of the new person, read -1 if you dont want to add a score");
-    score = input.nextInt();
+    for (int row = 0; row < resultsList.length; row++)
+    {
+      if (resultsList[row][0] == "")
+      {
+        System.out.println("Name of the new person you want to add");
+        input.nextLine();
+        resultsList[row][0] = input.nextLine();
+        System.out.println("Score of the new person, read -1 if you dont want to add a score");
+        resultsList[row][1] = input.nextLine();4
+        if (resultsList[row][1] == "-1")
+        {
+          resultsList[row][1] = "";
+          System.out.println(resultsList[row][0] + " " + resultsList[row][1]);
+          printMenu();
+        }
+        else
+        {
+         System.out.println(resultsList[row][0] + " " + resultsList[row][1]);
+         printMenu();
+        }
+      }
+      else 
+      {
+        continue;
+      }
+    }
   }
 
   /**
