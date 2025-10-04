@@ -10,6 +10,7 @@ public class DA339A_U1 {
   static String name = "";
   static int index = 0;
   static String newName = "";
+  static int newScore = 0;
   static Scanner input = new Scanner(System.in); //can be removed if another solution is used that does not require this scanner-object
   static Scanner scan = new Scanner(System.in);
   static int passingGradeThreshold = 20; //change as you need when testing      
@@ -206,7 +207,7 @@ public class DA339A_U1 {
    */
   public static void changeNameOfPerson(int index, String newName) {
     System.out.println("You chose to change the name of a person"); //you don't need to keep this line
-    System.out.println("Chose the person that you want to change by chosing their number on the list");
+    System.out.println("Choose the person that you want to change by chosing their number on the list");
     for (int row = 0; row < resultsList.length; row++)
     {
       System.out.println(row + "." + resultsList[row][0]);
@@ -243,7 +244,32 @@ public class DA339A_U1 {
    */
   public static void changeScoreForPerson(int index, int newScore) {
     System.out.println("You chose to change the score of a person"); //you don't need to keep this line
-    // Add your code here
+    System.out.println("Choose the person that you want to change by chosing their number on the list");
+    for (int row = 0; row < resultsList.length; row++)
+    {
+      for (int col = 0; col < resultsList[row].length; col++)
+      {
+        System.out.println(row + "." + resultsList[row][col]);
+        while (row+1 == resultsList.length)
+        {
+          index = input.nextInt();
+          if (resultsList[index][0] != "")
+          {
+           System.out.println("What is the new score of " + resultsList[index][0] + "?");
+           input.nextLine();
+           newScore = input.nextInt();
+           resultsList[index][1] = Integer.toString(newScore);
+           System.out.println("The new score of row " + resultsList[index][0] + " is " + newScore);
+           printMenu();
+          }
+          else 
+          {
+           System.out.println("There is no person on this index, taking you back to menu");
+           printMenu();
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -287,6 +313,7 @@ public class DA339A_U1 {
     System.out.println("3. Print out statistics");
     System.out.println("4. Add a person");
     System.out.println("5. Change name of person");
+    System.out.println("6. Change score of person");
     readMenuChoice();
   }
 
@@ -316,6 +343,10 @@ public class DA339A_U1 {
     if (menyVal == 5)
     {
       changeNameOfPerson(index, newName);
+    }
+    if (menyVal == 6)
+    {
+      changeScoreForPerson(index, newScore);
     }
     return 0; //line can be removed later if needed, needed like this to compile the code template
   }
