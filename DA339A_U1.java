@@ -8,6 +8,8 @@ import java.util.Scanner;
 public class DA339A_U1 {
   static int score = 0;
   static String name = "";
+  static int index = 0;
+  static String newName = "";
   static Scanner input = new Scanner(System.in); //can be removed if another solution is used that does not require this scanner-object
   static Scanner scan = new Scanner(System.in);
   static int passingGradeThreshold = 20; //change as you need when testing      
@@ -62,6 +64,7 @@ public class DA339A_U1 {
         }
       }
     }
+    printMenu();
   }
 
   /**
@@ -86,6 +89,7 @@ public class DA339A_U1 {
         }
       }
     }
+    printMenu();
   }
 
   /**
@@ -109,19 +113,17 @@ public class DA339A_U1 {
     int indexRowLow = 0;
     for (int row = 0; row < resultsList.length; row++)
     {
-      for (int col = 0; col < resultsList[row].length; col++)
-      {
       if (resultsList[row][0] != "")
       {
         peopleTakingTest += 1;
       }
       if (resultsList[row][2] == "G")
       {
-        godkändaElever =+ 1;
+        godkändaElever += 1;
       }
       if (resultsList[row][2] == "U")
       {
-        underkändaElever =+ 1;
+        underkändaElever += 1;
       }
       if (resultsList[row][1] != "")
       {
@@ -142,6 +144,9 @@ public class DA339A_U1 {
           indexRowLow = row;
         }
       }
+      else
+      {
+        continue;
       }
     }
     System.out.println("Så här många elever tar testet: " + peopleTakingTest);
@@ -149,6 +154,7 @@ public class DA339A_U1 {
     System.out.println("Så här många elever fick underkänt: " + underkändaElever);
     System.out.println("Högsta poäng har: " + resultsList[indexRowHigh][0] + " " + högstPoäng + " " + resultsList[indexRowHigh][2] + " ");
     System.out.println("Lägst poäng har: " + resultsList[indexRowLow][0] + " " + lägstPoäng +  " " + resultsList[indexRowLow][2]);
+    printMenu();
   }
 
   /**
@@ -169,7 +175,7 @@ public class DA339A_U1 {
         input.nextLine();
         resultsList[row][0] = input.nextLine();
         System.out.println("Score of the new person, read -1 if you dont want to add a score");
-        resultsList[row][1] = input.nextLine();4
+        resultsList[row][1] = input.nextLine();
         if (resultsList[row][1] == "-1")
         {
           resultsList[row][1] = "";
@@ -200,7 +206,30 @@ public class DA339A_U1 {
    */
   public static void changeNameOfPerson(int index, String newName) {
     System.out.println("You chose to change the name of a person"); //you don't need to keep this line
-    // Add your code here
+    System.out.println("Chose the person that you want to change by chosing their number on the list");
+    for (int row = 0; row < resultsList.length; row++)
+    {
+      System.out.println(row + "." + resultsList[row][0]);
+      while (row+1 == resultsList.length)
+      {
+        index = input.nextInt();
+        if (resultsList[index][0] != "")
+        {
+          System.out.println("What is the new name of this person?");
+          input.nextLine();
+          newName = input.nextLine();
+          resultsList[index][0] = newName;
+          System.out.println("The new name of row " + index + " is " + newName);
+          printMenu();
+        }
+        else
+        {
+          System.out.println("This space is already empty, taking you back to the menu");
+          printMenu();
+        }
+      }
+    }
+    //resultsList[row][0] = input.nextLine();     
   }
 
   /**
@@ -257,6 +286,7 @@ public class DA339A_U1 {
     System.out.println("2. Print out results list");
     System.out.println("3. Print out statistics");
     System.out.println("4. Add a person");
+    System.out.println("5. Change name of person");
     readMenuChoice();
   }
 
@@ -282,6 +312,10 @@ public class DA339A_U1 {
     if (menyVal == 4)
     {
       addPerson(name, score);
+    }
+    if (menyVal == 5)
+    {
+      changeNameOfPerson(index, newName);
     }
     return 0; //line can be removed later if needed, needed like this to compile the code template
   }
