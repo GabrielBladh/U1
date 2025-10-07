@@ -11,6 +11,8 @@ public class DA339A_U1 {
   static int index = 0;
   static String newName = "";
   static int newScore = 0;
+  static int index1 = 0;
+  static int index2 = 0;
   static Scanner input = new Scanner(System.in); //can be removed if another solution is used that does not require this scanner-object
   static Scanner scan = new Scanner(System.in);
   static int passingGradeThreshold = 20; //change as you need when testing      
@@ -29,6 +31,7 @@ public class DA339A_U1 {
                                  {"","",""},
                                };
 
+static String[][] tempArray = {{"","","",}};
  /*For testing at presentation do not erase this block
                                 {{"Adam Ason", "14","U"},
                                  {"Berta Bson", "25","G"},
@@ -64,6 +67,7 @@ public class DA339A_U1 {
           System.out.println(row + 1 + "." + resultsList[row][col]);
         }
       }
+      System.out.println();
     }
     printMenu();
   }
@@ -89,6 +93,7 @@ public class DA339A_U1 {
           System.out.println(row + 1 + ". " + "This space is empty");
         }
       }
+      System.out.println();
     }
     printMenu();
   }
@@ -139,7 +144,7 @@ public class DA339A_U1 {
           högstPoäng = elevPoäng;
           indexRowHigh = row;
         }
-        if  (elevPoäng < lägstPoäng)
+        if  (lägstPoäng > elevPoäng)
         {
           lägstPoäng = elevPoäng;
           indexRowLow = row;
@@ -177,7 +182,7 @@ public class DA339A_U1 {
         resultsList[row][0] = input.nextLine();
         System.out.println("Score of the new person, read -1 if you dont want to add a score");
         resultsList[row][1] = input.nextLine();
-        if (resultsList[row][1] == "-1")
+        if (resultsList[row][1].equals("-1"))
         {
           resultsList[row][1] = "";
           System.out.println(resultsList[row][0] + " " + resultsList[row][1]);
@@ -189,7 +194,12 @@ public class DA339A_U1 {
          printMenu();
         }
       }
-      else 
+      else if (resultsList[9][0] != "")
+      {
+        System.out.println("All spaces are filled already, sending you back to menu");
+        printMenu();
+      }
+      else
       {
         continue;
       }
@@ -250,25 +260,23 @@ public class DA339A_U1 {
       for (int col = 0; col < resultsList[row].length; col++)
       {
         System.out.println(row + "." + resultsList[row][col]);
-        while (row+1 == resultsList.length)
-        {
-          index = input.nextInt();
-          if (resultsList[index][0] != "")
-          {
-           System.out.println("What is the new score of " + resultsList[index][0] + "?");
-           input.nextLine();
-           newScore = input.nextInt();
-           resultsList[index][1] = Integer.toString(newScore);
-           System.out.println("The new score of row " + resultsList[index][0] + " is " + newScore);
-           printMenu();
-          }
-          else 
-          {
-           System.out.println("There is no person on this index, taking you back to menu");
-           printMenu();
-          }
-        }
       }
+      System.out.println();
+    }
+    index = input.nextInt();
+    if (resultsList[index][0] != "")
+    {
+      System.out.println("What is the new score of " + resultsList[index][0] + "?");
+      input.nextLine();
+      newScore = input.nextInt();
+      resultsList[index][1] = Integer.toString(newScore);
+      System.out.println("The new score of row " + resultsList[index][0] + " is " + newScore);
+      printMenu();
+    }
+    else 
+    {
+      System.out.println("There is no person on this index, taking you back to menu");
+      printMenu();
     }
   }
 
@@ -281,7 +289,29 @@ public class DA339A_U1 {
    */
   public static void removePerson(int index) {
     System.out.println("You chose to remove a person"); //you don't need to keep this line
-    // Add your code here
+    System.out.println("Choose which person you want to delete by chosing their number on the list");
+    for (int row = 0; row < resultsList.length; row++)
+    {
+      for (int col = 0; col < resultsList[row].length; col++)
+      {
+        System.out.println(row + "." + resultsList[row][col]);
+      }
+    }
+    index = input.nextInt();
+    System.out.println("Deleting index: " + index + "...");
+    int row = 0;
+    if (resultsList[index][0] != "")
+    {
+      for (int col2 = 0; col2 < resultsList[row].length; col2++)
+      {
+        resultsList[index][col2] = "";
+      }
+    }
+    else 
+    {
+      System.out.println("This index is empty, sending you back to menu");
+    }
+    printMenu();
   }
 
   /**
@@ -296,8 +326,35 @@ public class DA339A_U1 {
    * @param index2 Second index involved in the change of places
    */
   public static void changePlaces(int index1, int index2) {
-    System.out.println("You chose to switch places between index "+index1+" and "+index2); //you don't need to keep this line
-    // Add your code here
+    System.out.println("You chose to switch places of a person(s)"); //you don't need to keep this line
+    System.out.println("Choose which people you want to change by chosing their number on the list");
+    for (int row = 0; row < resultsList.length; row++)
+    {
+      for (int col = 0; col < resultsList[row].length; col++)
+      {
+        System.out.println(row + "." + resultsList[row][col]);
+      }
+    }
+    System.out.println("Choose the first person, or an empty space");
+    index1 = input.nextInt();
+    System.out.println("Choose the next person, or an empty space" + "\n" + "NOTE: YOU CAN NOT CHOOSE EMPTY SPACE TWICE NEITHER CAN THE SAME PERSON BE CHOSEN TWICE");
+    index2 = input.nextInt();
+    System.out.println("You chose to switch places of index " + index1 + " and " + index2);
+    int row = 0;
+    if (index1 != index2 || resultsList[index1][0] != "" && resultsList[index2][0] != "") //Kollar så att vi inte väljer samma person 2 gånger och så vi inte väljer två tomma platser
+      {
+        for (int col2 = 0; col2 < resultsList[row].length; col2++)
+        {
+          tempArray[0][col2] = resultsList[index1][col2];
+          resultsList[index1][col2] = resultsList[index2][col2];
+          resultsList[index2][col2] = tempArray[0][col2];
+        }
+      }
+    else
+    {
+      System.out.println("You chose two empty spaces or the same person twice, sending you back to menu");
+    }
+    printMenu();
   }
 
   /**
@@ -314,6 +371,8 @@ public class DA339A_U1 {
     System.out.println("4. Add a person");
     System.out.println("5. Change name of person");
     System.out.println("6. Change score of person");
+    System.out.println("7. Change place of 2 people");
+    System.out.println("8. Remove a person");
     readMenuChoice();
   }
 
@@ -347,6 +406,14 @@ public class DA339A_U1 {
     if (menyVal == 6)
     {
       changeScoreForPerson(index, newScore);
+    }
+    if (menyVal == 7)
+    {
+      changePlaces(index1, index2);
+    }
+    if (menyVal == 8)
+    {
+      removePerson(index);
     }
     return 0; //line can be removed later if needed, needed like this to compile the code template
   }
