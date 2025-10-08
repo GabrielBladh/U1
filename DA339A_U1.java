@@ -15,7 +15,7 @@ public class DA339A_U1 {
   static int index2 = 0;
   static Scanner input = new Scanner(System.in); //can be removed if another solution is used that does not require this scanner-object
   static Scanner scan = new Scanner(System.in);
-  static int passingGradeThreshold = 20; //change as you need when testing      
+  static int passingGradeThreshold = 0; //change as you need when testing      
                                              
   
   // an array to use for testing, replace as needed to test your code
@@ -362,9 +362,9 @@ static String[][] tempArray = {{"","","",}};
    * This printout shall also inform the user about the threshold for a passing grade
    * stored in variable passingGradeThreshold.
    */
-  public static void printMenu() {
+  public static void printMenu() 
+  {
     System.out.println("Program menu"); //you don't need to keep this line
-    System.out.println("You started the program"); //this line can be removed
     System.out.println("1. Information of the persons in the results list");
     System.out.println("2. Print out results list");
     System.out.println("3. Print out statistics");
@@ -376,6 +376,54 @@ static String[][] tempArray = {{"","","",}};
     readMenuChoice();
   }
 
+  public static void passingGradeThreshold()
+  {
+    for (int row = 0; row < resultsList.length; row++)
+    {
+      if (resultsList[row][1] != "")
+      {
+        if (passingGradeThreshold > Integer.parseInt(resultsList[row][1]))
+        {
+          resultsList[row][2] = "U";
+        }
+        else 
+        {
+          resultsList[row][2] = "G";
+        } 
+      }
+      else
+      {
+        continue;
+      }
+    }
+  }
+
+  public static void scoreForPassing(int passingGradeThreshold)
+  {
+    if (passingGradeThreshold == 0)
+    {
+    System.out.println("What is the score for passing this test?");
+    passingGradeThreshold = input.nextInt();
+    }
+    for (int row = 0; row < resultsList.length; row++)
+    {
+      if (resultsList[row][1] != "")
+      {
+        if (passingGradeThreshold > Integer.parseInt(resultsList[row][1]))
+        {
+          resultsList[row][2] = "U";
+        }
+        else 
+        {
+          resultsList[row][2] = "G";
+        } 
+      }
+      else
+      {
+        continue;
+      }
+    }
+  }
   /**
    * This method reads the menu choice from the user and returns the choice the user made as an integer.
    * @return The menu choice made by the user represented by an integer value of type int.
@@ -420,6 +468,7 @@ static String[][] tempArray = {{"","","",}};
 
 
   public static void main(String[] args) {
+    scoreForPassing(passingGradeThreshold);
     printMenu();
      // Do not forget to read the threshold of the passing grade as the program starts 
      // and store it in the variable passingGradeThreshold.
