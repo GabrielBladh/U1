@@ -14,7 +14,6 @@ public class DA339A_U1 {
   static int index1 = 0;
   static int index2 = 0;
   static Scanner input = new Scanner(System.in); //can be removed if another solution is used that does not require this scanner-object
-  static Scanner scan = new Scanner(System.in);
   static int passingGradeThreshold = 0; //change as you need when testing      
                                              
   
@@ -179,9 +178,9 @@ static String[][] tempArray = {{"","","",}};
       {
         System.out.println("Name of the new person you want to add");
         input.nextLine();
-        resultsList[row][0] = input.nextLine();
+        resultsList[row][0] = input.nextLine(); //name
         System.out.println("Score of the new person, read -1 if you dont want to add a score");
-        resultsList[row][1] = input.nextLine();
+        resultsList[row][1] = input.nextLine(); // score
         if (resultsList[row][1].equals("-1"))
         {
           resultsList[row][1] = "";
@@ -373,6 +372,7 @@ static String[][] tempArray = {{"","","",}};
     System.out.println("6. Change score of person");
     System.out.println("7. Change place of 2 people");
     System.out.println("8. Remove a person");
+    System.out.println("-1. Close system");
     readMenuChoice();
   }
 
@@ -462,6 +462,10 @@ static String[][] tempArray = {{"","","",}};
     if (menyVal == 8)
     {
       removePerson(index);
+    }
+    if (menyVal == -1)
+    {
+      //Stänger av koden
     }
     return 0; //line can be removed later if needed, needed like this to compile the code template
   }
