@@ -6,13 +6,8 @@
 import java.util.Scanner;
 
 public class DA339A_U1 {
-  static int score = 0;
-  static String name = "";
-  static int index = 0;
-  static String newName = "";
-  static int newScore = 0;
-  static int index1 = 0;
-  static int index2 = 0;
+  //static int index1 = 0;
+  //static int index2 = 0;
   static Scanner input = new Scanner(System.in); //can be removed if another solution is used that does not require this scanner-object
   static int passingGradeThreshold = 0; //change as you need when testing      
                                              
@@ -78,18 +73,18 @@ static String[][] tempArray = {{"","","",}};
    * In both cases a number representing the place in the result list is shown.
    */
   public static void printResultList() {
-    System.out.println("You chose to print the result list"); //you don't need to keep this line
+    //System.out.println("You chose to print the result list"); //you don't need to keep this line
     for (int row = 0; row < resultsList.length; row++)
     {
       for (int col = 0; col < resultsList[row].length; col++)
       {
         if (resultsList[row][2] != "")
         {
-          System.out.println(row + 1 + ". " + resultsList[row][col]);
+          System.out.println(row + ". " + resultsList[row][col]);
         }
         else
         {
-          System.out.println(row + 1 + ". " + "This space is empty");
+          System.out.println(row + ". " + "This space is empty");
         }
       }
       System.out.println();
@@ -170,39 +165,27 @@ static String[][] tempArray = {{"","","",}};
    * @param name The name of the person to add
    * @param score The score of the person to add as an int, if this is a negative value no score is set.
    */
-  public static void addPerson(String name, int score) {
-    System.out.println("You chose to add a person"); //you don't need to keep this line
-    for (int row = 0; row < resultsList.length; row++)
-    {
-      if (resultsList[row][0] == "")
+  public static void addPerson(String name, int score) 
+  {
+     for (int row = 0; row < resultsList.length; row++)
       {
-        System.out.println("Name of the new person you want to add");
-        input.nextLine();
-        resultsList[row][0] = input.nextLine(); //name
-        System.out.println("Score of the new person, read -1 if you dont want to add a score");
-        resultsList[row][1] = input.nextLine(); // score
-        if (resultsList[row][1].equals("-1"))
+        if (resultsList[row][0] == "")
+        {
+          resultsList[row][0] = name;
+          resultsList[row][1] = Integer.toString(score);
+        }
+        if (score == -1)
         {
           resultsList[row][1] = "";
-          System.out.println(resultsList[row][0] + " " + resultsList[row][1]);
+          System.out.println(name + " " + score);
           printMenu();
         }
         else
         {
-         System.out.println(resultsList[row][0] + " " + resultsList[row][1]);
+         System.out.println(name + " " + score);
          printMenu();
         }
       }
-      else if (resultsList[9][0] != "")
-      {
-        System.out.println("All spaces are filled already, sending you back to menu");
-        printMenu();
-      }
-      else
-      {
-        continue;
-      }
-    }
   }
 
   /**
@@ -215,30 +198,9 @@ static String[][] tempArray = {{"","","",}};
    * @param newName The new name of the person at place given by index.
    */
   public static void changeNameOfPerson(int index, String newName) {
-    System.out.println("You chose to change the name of a person"); //you don't need to keep this line
-    System.out.println("Choose the person that you want to change by chosing their number on the list");
-    for (int row = 0; row < resultsList.length; row++)
-    {
-      System.out.println(row + "." + resultsList[row][0]);
-      while (row+1 == resultsList.length)
-      {
-        index = input.nextInt();
-        if (resultsList[index][0] != "")
-        {
-          System.out.println("What is the new name of this person?");
-          input.nextLine();
-          newName = input.nextLine();
-          resultsList[index][0] = newName;
-          System.out.println("The new name of row " + index + " is " + newName);
-          printMenu();
-        }
-        else
-        {
-          System.out.println("This space is already empty, taking you back to the menu");
-          printMenu();
-        }
-      }
-    }
+    resultsList[index][0] = newName;
+    System.out.println("The new name of row " + index + " is " + newName);
+    printMenu();
     //resultsList[row][0] = input.nextLine();     
   }
 
@@ -252,31 +214,9 @@ static String[][] tempArray = {{"","","",}};
    * @param newScore The new score, as an int, of the person at place given by index. If this is a negative value no score is set.
    */
   public static void changeScoreForPerson(int index, int newScore) {
-    System.out.println("You chose to change the score of a person"); //you don't need to keep this line
-    System.out.println("Choose the person that you want to change by chosing their number on the list");
-    for (int row = 0; row < resultsList.length; row++)
-    {
-      for (int col = 0; col < resultsList[row].length; col++)
-      {
-        System.out.println(row + "." + resultsList[row][col]);
-      }
-      System.out.println();
-    }
-    index = input.nextInt();
-    if (resultsList[index][0] != "")
-    {
-      System.out.println("What is the new score of " + resultsList[index][0] + "?");
-      input.nextLine();
-      newScore = input.nextInt();
-      resultsList[index][1] = Integer.toString(newScore);
-      System.out.println("The new score of row " + resultsList[index][0] + " is " + newScore);
-      printMenu();
-    }
-    else 
-    {
-      System.out.println("There is no person on this index, taking you back to menu");
-      printMenu();
-    }
+    resultsList[index][1] = Integer.toString(newScore);
+    System.out.println("The new score of row " + resultsList[index][0] + " is " + newScore);
+    printMenu();
   }
 
   /**
@@ -287,20 +227,10 @@ static String[][] tempArray = {{"","","",}};
    * @param index The index of the place where a person is to be removed.
    */
   public static void removePerson(int index) {
-    System.out.println("You chose to remove a person"); //you don't need to keep this line
-    System.out.println("Choose which person you want to delete by chosing their number on the list");
-    for (int row = 0; row < resultsList.length; row++)
-    {
-      for (int col = 0; col < resultsList[row].length; col++)
-      {
-        System.out.println(row + "." + resultsList[row][col]);
-      }
-    }
-    index = input.nextInt();
-    System.out.println("Deleting index: " + index + "...");
     int row = 0;
     if (resultsList[index][0] != "")
     {
+      System.out.println("Deleting index: " + index + "...");
       for (int col2 = 0; col2 < resultsList[row].length; col2++)
       {
         resultsList[index][col2] = "";
@@ -324,25 +254,12 @@ static String[][] tempArray = {{"","","",}};
    * @param index1 First index involved in the change of places
    * @param index2 Second index involved in the change of places
    */
-  public static void changePlaces(int index1, int index2) {
-    System.out.println("You chose to switch places of a person(s)"); //you don't need to keep this line
-    System.out.println("Choose which people you want to change by chosing their number on the list");
-    for (int row = 0; row < resultsList.length; row++)
-    {
-      for (int col = 0; col < resultsList[row].length; col++)
-      {
-        System.out.println(row + "." + resultsList[row][col]);
-      }
-    }
-    System.out.println("Choose the first person, or an empty space");
-    index1 = input.nextInt();
-    System.out.println("Choose the next person, or an empty space" + "\n" + "NOTE: YOU CAN NOT CHOOSE EMPTY SPACE TWICE NEITHER CAN THE SAME PERSON BE CHOSEN TWICE");
-    index2 = input.nextInt();
+  public static void changePlaces(int index1, int index2) 
+  {
     System.out.println("You chose to switch places of index " + index1 + " and " + index2);
-    int row = 0;
     if (index1 != index2 || resultsList[index1][0] != "" && resultsList[index2][0] != "") //Kollar så att vi inte väljer samma person 2 gånger och så vi inte väljer två tomma platser
       {
-        for (int col2 = 0; col2 < resultsList[row].length; col2++)
+        for (int col2 = 0; col2 < resultsList[0].length; col2++)
         {
           tempArray[0][col2] = resultsList[index1][col2];
           resultsList[index1][col2] = resultsList[index2][col2];
@@ -400,11 +317,10 @@ static String[][] tempArray = {{"","","",}};
 
   public static void scoreForPassing(int passingGradeThreshold)
   {
-    if (passingGradeThreshold == 0)
-    {
     System.out.println("What is the score for passing this test?");
     passingGradeThreshold = input.nextInt();
-    }
+    //if (passingGradeThreshold < 0 ||)
+    //if (passingGradeThreshold = int)
     for (int row = 0; row < resultsList.length; row++)
     {
       if (resultsList[row][1] != "")
@@ -430,7 +346,7 @@ static String[][] tempArray = {{"","","",}};
    */
   public static int readMenuChoice() {
     System.out.println("Make menu choice"); //you don't need to keep this line
-     int menyVal = input.nextInt(); 
+    int menyVal = input.nextInt(); 
     if (menyVal == 1)
     {
       printPersonsInformation();
@@ -443,24 +359,97 @@ static String[][] tempArray = {{"","","",}};
     {
       printStatistics();
     }
-    if (menyVal == 4)
+    if (menyVal == 4) //addPerson
     {
+      if (resultsList[9][0] != "")
+      {
+        System.out.println("All spaces are filled already, sending you back to menu");
+        printMenu();
+      }
+      System.out.println("You chose to add a person");
+      System.out.println("Name of the new person you want to add");
+      input.nextLine();
+      String name = input.nextLine();
+      System.out.println("Score of the new person, read -1 if you dont want to add a score");
+      int score = isInputInt();
       addPerson(name, score);
     }
-    if (menyVal == 5)
+    if (menyVal == 5) //changeNameOfPerson
     {
-      changeNameOfPerson(index, newName);
+    System.out.println("You chose to change the name of a person"); //you don't need to keep this line
+    for (int row = 0; row < resultsList.length; row++)
+    {
+      System.out.println(row + "." + resultsList[row][0]);
     }
-    if (menyVal == 6)
+    System.out.println("Choose the person that you want to change by chosing their number on the list");
+    int index = isInputValid();
+    if (resultsList[index][0] != "")
     {
+      System.out.println("What is the new name of this person?");
+      input.nextLine();
+    }
+    else
+    {
+      System.out.println("This space is already empty, taking you back to the menu");
+      printMenu();
+    }
+    String newName = input.nextLine();
+    changeNameOfPerson(index, newName);
+    }
+    if (menyVal == 6) //changeScoreForPerson
+    {
+    System.out.println("You chose to change the score of a person"); //you don't need to keep this line
+    System.out.println("Choose the person that you want to change by chosing their number on the list");
+    for (int row = 0; row < resultsList.length; row++)
+    {
+      for (int col = 0; col < resultsList[row].length; col++)
+      {
+        System.out.println(row + "." + resultsList[row][col]);
+      }
+    }
+    int index = isInputValid();
+    if (resultsList[index][0] != "")
+    {
+      System.out.println("What is the new score of " + resultsList[index][0] + "?");
+      input.nextLine();
+      int newScore = isInputInt();
       changeScoreForPerson(index, newScore);
     }
-    if (menyVal == 7)
+    else 
     {
-      changePlaces(index1, index2);
+      System.out.println("There is no person on this index, taking you back to menu");
+      printMenu();
     }
-    if (menyVal == 8)
+    }
+    if (menyVal == 7) //changePlaces
     {
+    System.out.println("You chose to switch places of a person(s)"); //you don't need to keep this line
+    System.out.println("Choose which people you want to change by chosing their number on the list");
+    for (int row = 0; row < resultsList.length; row++)
+    {
+      for (int col = 0; col < resultsList[row].length; col++)
+      {
+        System.out.println(row + "." + resultsList[row][col]);
+      }
+    }
+    System.out.println("Choose the first person, or an empty space");
+    int index1 = isInputValid();
+    System.out.println("Choose the next person, or an empty space" + "\n" + "NOTE: YOU CAN NOT CHOOSE EMPTY SPACE TWICE NEITHER CAN THE SAME PERSON BE CHOSEN TWICE");
+    int index2 = isInputValid();
+    changePlaces(index1, index2);
+    }
+    if (menyVal == 8) //removePerson
+    {
+    System.out.println("You chose to remove a person"); //you don't need to keep this line
+    System.out.println("Choose which person you want to delete by chosing their number on the list");
+    for (int row = 0; row < resultsList.length; row++)
+    {
+      for (int col = 0; col < resultsList[row].length; col++)
+      {
+        System.out.println(row + "." + resultsList[row][col]);
+      }
+    }
+    int index = isInputValid();
       removePerson(index);
     }
     if (menyVal == -1)
@@ -469,6 +458,29 @@ static String[][] tempArray = {{"","","",}};
     }
     return 0; //line can be removed later if needed, needed like this to compile the code template
   }
+
+  public static int isInputInt()
+  {
+    int isInt = 0;
+    while (!input.hasNextInt() || (isInt = input.nextInt()) < 0)
+    {
+      input.nextLine();
+      System.out.println("Please enter a valid input");
+    }
+    return isInt;
+  }
+
+  public static int isInputValid()
+  {
+    int isValid = 0;
+    while (!input.hasNextInt() || (isValid = input.nextInt()) > 9 || isValid < 0)
+    {
+      input.nextLine();
+      System.out.println("Please enter a valid input");
+    }
+    return isValid;
+  }
+  
 
 
   public static void main(String[] args) {
