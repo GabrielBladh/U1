@@ -107,6 +107,7 @@ static String[][] tempArray = {{"","","",}};
     int lägstPoäng = 0;
     int indexRowHigh = 0;
     int indexRowLow = 0;
+    boolean personHittad = false;
     for (int row = 0; row < resultsList.length; row++)
     {
       if (resultsList[row][0] != "")
@@ -123,11 +124,14 @@ static String[][] tempArray = {{"","","",}};
       }
       if (resultsList[row][1] != "")
       {
-       elevPoäng = Integer.parseInt(resultsList[row][1]);
-        if (row == 0)
+        elevPoäng = Integer.parseInt(resultsList[row][1]);
+        while (personHittad == false)
         {
-          lägstPoäng = elevPoäng;
-          högstPoäng = elevPoäng;
+          if (resultsList[row][0] != "")
+          {
+            lägstPoäng = elevPoäng;
+            personHittad = true;
+          }
         }
         if  (elevPoäng > högstPoäng)
         {
@@ -139,10 +143,6 @@ static String[][] tempArray = {{"","","",}};
           lägstPoäng = elevPoäng;
           indexRowLow = row;
         }
-      }
-      else
-      {
-        continue;
       }
     }
     System.out.println("Så här många elever tar testet: " + peopleTakingTest);
@@ -177,7 +177,7 @@ static String[][] tempArray = {{"","","",}};
             resultsList[row][1] = "";
             System.out.println(name + " " + resultsList[row][1]);
           }
-          passingGradeThreshold(index);
+          checkGrade(index);
           System.out.println(name + " " + resultsList[row][1]);
           foundEmptySpace = true; 
         }
@@ -218,7 +218,7 @@ static String[][] tempArray = {{"","","",}};
     else
     {
       resultsList[index][1] = Integer.toString(newScore);
-      passingGradeThreshold(index);
+      checkGrade(index);
       System.out.println("The new score of row " + resultsList[index][0] + " is " + newScore);
     }
     //main(null);
@@ -295,7 +295,7 @@ static String[][] tempArray = {{"","","",}};
     System.out.println("-1. Close system");
   }
 
-  public static int passingGradeThreshold(int index)
+  public static int checkGrade(int index) //denna kollar om en ny persons eller en ny score får godkänt eller inte
   {
     if (resultsList[index][1] != "")
     {
@@ -311,7 +311,7 @@ static String[][] tempArray = {{"","","",}};
     return index;
   }
 
-  public static void scoreForPassing(int passingGradeThreshold)
+  public static void scoreForPassing(int passingGradeThreshold) //denna kollar genom hela arrayen i början av programmet och kollar ifall de i arrayen har fått godkänt eller inte baserat på den passingGradeThresholden man låg
   {
       for (int row = 0; row < resultsList.length; row++)
       {
@@ -346,7 +346,7 @@ static String[][] tempArray = {{"","","",}};
   public static int isInputInt()
   {
     int isInt = 0;
-    while (!input.hasNextInt() || (isInt = input.nextInt()) == 0 || isInt < -1)
+    while (!input.hasNextInt() || (isInt = input.nextInt()) < -1)
     {
       input.nextLine();
       System.out.println("Please enter a valid input");
