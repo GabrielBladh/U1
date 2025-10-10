@@ -163,11 +163,11 @@ static String[][] tempArray = {{"","","",}};
   public static void addPerson(String name, int score) 
   {
     boolean foundEmptySpace = false;
-    while (foundEmptySpace == false)
+    for (int row = 0; row < resultsList.length; row++)
     {
-     for (int row = 0; row < resultsList.length; row++)
+      if (resultsList[row][0] == "")
       {
-        if (resultsList[row][0] == "")
+        while (foundEmptySpace == false)
         {
           int index = row;
           resultsList[row][0] = name;
@@ -179,7 +179,7 @@ static String[][] tempArray = {{"","","",}};
           }
           passingGradeThreshold(index);
           System.out.println(name + " " + resultsList[row][1]);
-          foundEmptySpace = true;
+          foundEmptySpace = true; 
         }
       }
     }
@@ -335,7 +335,7 @@ static String[][] tempArray = {{"","","",}};
   public static int readMenuChoice() {
     System.out.println("Make menu choice"); //you don't need to keep this line
     int Val = 0;
-    while (!input.hasNextInt() || (Val = input.nextInt()) > 8 || Val == 0 || Val < -2)
+    while (!input.hasNextInt() || (Val = input.nextInt()) > 8 || Val == 0 || Val < -1)
     {
       input.nextLine();
       System.out.println("Please enter a valid input");
@@ -346,7 +346,7 @@ static String[][] tempArray = {{"","","",}};
   public static int isInputInt()
   {
     int isInt = 0;
-    while (!input.hasNextInt() || (isInt = input.nextInt()) < -1)
+    while (!input.hasNextInt() || (isInt = input.nextInt()) == 0 || isInt < -1)
     {
       input.nextLine();
       System.out.println("Please enter a valid input");
@@ -391,6 +391,7 @@ static String[][] tempArray = {{"","","",}};
       }
       if (menyVal == 4) //addPerson
       {
+        boolean namnTomt = true;
         if (resultsList[9][0] != "")
         {
           System.out.println("All spaces are filled already");
@@ -400,10 +401,21 @@ static String[][] tempArray = {{"","","",}};
           System.out.println("You chose to add a person");
           System.out.println("Name of the new person you want to add");
           input.nextLine();
-          String name = input.nextLine();
-          System.out.println("Score of the new person, read -1 if you dont want to add a score");
-          int score = isInputInt();
-          addPerson(name, score);
+          while (namnTomt == true)
+          {
+            String name = input.nextLine();
+            if (name == "")
+            {
+              System.out.println("Namnet får inte vara tomt, försök igen");
+            }
+            else
+            {
+              namnTomt = false;
+              System.out.println("Score of the new person, read -1 if you dont want to add a score");
+              int score = isInputInt();
+              addPerson(name, score); 
+            }
+          }
         }
       }
       if (menyVal == 5) //changeNameOfPerson
