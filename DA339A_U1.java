@@ -1,7 +1,7 @@
 /*
-* Author: <Gabriel Bladh>
-* Id: <ar7086>
-* Study program: <DT>
+* Author: Gabriel Bladh
+* Id: ar7086
+* Study program: DT
 */
 import java.util.Scanner;
 
@@ -172,13 +172,17 @@ static String[][] tempArray = {{"","","",}};
           int index = row;
           resultsList[row][0] = name;
           resultsList[row][1] = Integer.toString(score);
-          if (resultsList[row][1].equals("-1"))
+          if (score <= -1)
           {
+            System.out.println("You chose a number under 0, score set to blank");
             resultsList[row][1] = "";
             System.out.println(name + " " + resultsList[row][1]);
           }
-          checkGrade(index);
-          System.out.println(name + " " + resultsList[row][1]);
+          else
+          {
+            checkGrade(index);
+            System.out.println(name + " " + resultsList[row][1]);
+          }
           foundEmptySpace = true; 
         }
       }
@@ -346,12 +350,24 @@ static String[][] tempArray = {{"","","",}};
   public static int isInputInt()
   {
     int isInt = 0;
-    while (!input.hasNextInt() || (isInt = input.nextInt()) < -1)
+    while (!input.hasNextInt())
     {
       input.nextLine();
       System.out.println("Please enter a valid input");
     }
+    isInt = input.nextInt();
     return isInt;
+  }
+
+  public static int isInputIntForScore()
+  {
+    int isIntForScore = 0;
+    while (!input.hasNextInt() || (isIntForScore = input.nextInt()) < -1)
+    {
+      input.nextLine();
+      System.out.println("Please enter a valid input");
+    }
+    return isIntForScore;
   }
 
   public static int isInputValid()
@@ -369,7 +385,19 @@ static String[][] tempArray = {{"","","",}};
 
   public static void main(String[] args) {
     System.out.println("What is the score for passing this test?");
-    passingGradeThreshold = input.nextInt();
+    boolean scorePositive = false;
+    while (scorePositive == false)
+    {
+      passingGradeThreshold = isInputIntForScore();
+      if (passingGradeThreshold <= 0)
+      {
+        System.out.println("The input is invalid, must be a number higher than 0");
+      }
+      else
+      {
+        scorePositive = true;
+      }
+    }
     scoreForPassing(passingGradeThreshold);
     boolean x = true;
     while (x == true)
@@ -455,7 +483,7 @@ static String[][] tempArray = {{"","","",}};
         {
           System.out.println("What is the new score of " + resultsList[index][0] + "?" + " Choose -1 if they shouldn't have a new score");
           input.nextLine();
-          int newScore = isInputInt();
+          int newScore = isInputIntForScore();
           changeScoreForPerson(index, newScore);
         }
         else 
