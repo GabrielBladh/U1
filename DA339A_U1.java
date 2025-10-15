@@ -23,7 +23,7 @@ public class DA339A_U1 {
                                  {"","",""},
                                };
 
-static String[][] tempArray = {{"","","",}};
+
  /*For testing at presentation do not erase this block
                                 {{"Adam Ason", "14","U"},
                                  {"Berta Bson", "25","G"},
@@ -264,15 +264,19 @@ static String[][] tempArray = {{"","","",}};
    */
   public static void changePlaces(int index1, int index2) 
   {
+    String tempName = "";
+    String tempScore = "";
     System.out.println("You chose to switch places of index " + index1 + " and " + index2);
     if (index1 != index2 && resultsList[index1][0] != "" && resultsList[index2][0] != "") //Kollar så att vi inte väljer samma person 2 gånger och så vi inte väljer två tomma platser
       {
-        for (int col2 = 0; col2 < resultsList[0].length; col2++)
-        {
-          tempArray[0][col2] = resultsList[index1][col2];
-          resultsList[index1][col2] = resultsList[index2][col2];
-          resultsList[index2][col2] = tempArray[0][col2];
-        }
+        tempName = resultsList[index1][0];
+        resultsList[index1][0] = resultsList[index2][0];
+        resultsList[index2][0] = tempName;
+        tempScore = resultsList[index1][1];
+        resultsList[index1][1] = resultsList[index2][1];
+        resultsList[index2][1] = tempScore;
+        checkGrade(index2);
+        checkGrade(index1);
       }
     else
     {
